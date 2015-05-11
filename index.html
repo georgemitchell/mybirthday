@@ -1,1 +1,281 @@
-Hello World is this right?
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>George's Birthday | George gets old</title>
+  <meta name="description" content="">
+  <meta name="author" content="George Mitchell">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/custom.css">
+
+  <!-- <link rel="stylesheet" href="css/flipclock.css"> -->
+  <link href="css/mb-comingsoon.min.css" rel="stylesheet" />
+
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="js/jquery.mb-comingsoon.min.js"></script>
+  <script src="js/jquery.validate.min.js" type="text/javascript"></script>
+  <!-- <script src="js/flipclock.js"></script> -->
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <script>
+	$(document).ready(function(){
+	    $("#num_attending").load("http://georgemitchell.site90.com/stats.php");
+
+      /*$('#rsvp_form').ajaxForm();
+
+      // attach handler to form's submit event 
+      $('#rsvp_form').submit(function() { 
+          // submit the form 
+          $(this).ajaxSubmit(); 
+          // return false to prevent normal browser submit and page navigation 
+          return false; 
+      });*/
+
+      $.validator.addMethod(
+          "attendeeemailcheck", 
+          function(value, element, params) {
+            if(element.value > 0)
+            {
+              var email = $( "#email" ).val();
+              if((email == null) || (email == ""))
+              {
+                return false;
+              }
+              else
+              {
+                return true;
+              }
+            }
+            else
+            {
+              return true;
+            }
+          }, 
+          "Attendees must specify an email address."
+      );
+
+      $("#rsvp_form").validate({
+          rules: {
+            // simple rule, converted to {required:true}
+            name: {
+              required: true,
+              maxlength: 256
+            },
+            // compound rule
+            email: {
+              email: true,
+              maxlength: 128
+            },
+            num_attending: {
+              attendeeemailcheck: true
+            }
+          },
+
+          submitHandler: function(form) {
+              $("#rsvp").html('<div class="row"><img src="images/ajax-loader.gif" /></div>');
+              var payload = $(form).serialize();
+              $.post('http://georgemitchell.site90.com/rsvp.php', payload)
+                .done(function( data ) {
+                  $('#rsvp').html(data);
+                });
+              return false;
+          }
+
+          
+      });
+	});
+  </script>
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+
+  <div class="section intro">
+    <h1>George's Birthday</h1>
+    <h3>(sort of)</h3>
+    <h5>June 20, 2015<h5>
+    <div class="row centered text-center" id="countdown" style="background-color:#cdcdcd"></div>
+    <script type="text/javascript">
+        $(function () {
+            var $section = $('section');
+            $(window).on("resize", function () {
+                var dif = Math.max($(window).height() - $section.height(), 0);
+                var padding = Math.floor(dif / 2) + 'px';
+                $section.css({ 'padding-top': padding, 'padding-bottom': padding });
+            }).trigger("resize");
+            $('#countdown').mbComingsoon(new Date(2015, 5, 20, 7, 00));
+            setTimeout(function () {
+                $(window).resize();
+            }, 200);
+        });
+
+    </script>
+    
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <div class="row">
+        <div class="video-container">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/HjMsbyc1qQw" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="section values">
+    <div class="container">
+      <h3 class="section-heading">Activities</h3>
+      <p class="section-description">It's going to be a ridiculously full day -- there will be something for everyone.
+      Bonus points for attending all events, but don't be afraid to punk out on ones that sound awful to you.</p>
+      <div class="row">
+        <div class="one-third column value">
+          <img class="u-max-full-width" src="images/surf.png" />
+          <h2 class="value-multiplier">Dawn Patrol</h2>
+          <h5 class="value-heading">(Morning)</h5>
+          <p class="value-description">Well, not quite dawn patrol, but we will be paddling out for a 
+            monster surf session starting at 7AM.  Boards will be provided or bring your own stick for logging
+            hours in the green room.</p>
+        </div>
+        <div class="one-third column value">
+          <h2 class="value-multiplier"><img src="images/volleyball.png" /></h2>
+          <h2 class="value-multiplier">Volleyball</h2>
+          <h5 class="value-heading">(Morning / Afternoon)</h5>
+          <p class="value-description">Throw on the vintage sideout visor and SPF 180 and join us the 
+          volleyball courts.  Everyone and their mom will be there.</p>
+        </div>
+        <div class="one-third column value">
+          <h2 class="value-multiplier"><img src="images/disco-ball.png" /></h2>
+          <h2 class="value-multiplier">House Party</h2>
+          <h5 class="value-heading">(Afternoon / Evening)</h5>
+          <p class="value-description">As the beach activities wind down, come ring in the evening with 
+          food, drinks, and music at George's house.  Those of you who hate the beach can proceed directly
+          to this step. </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section testimonials">
+    <div class="container">
+      <h3 class="section-heading">
+      	Don't just take my word that it's gonna be RAD. <br />
+      	Hear what 3 of the <span id="num_attending"><blink>...</blink></span> people who are coming have to say.
+      </h3>
+      <div class="row">
+        <div class="one-third column value">
+          <img class="u-max-full-width" src="images/mom.png" />
+          <h2 class="value-multiplier">My Mom</h2>
+          <h5 class="value-heading">Staples Rewards Member</h5>
+          <p class="value-description">George, do you have a facebook?  I have a facebook now. 
+          	Are you going to invite your aunts?</p>
+        </div>
+        <div class="one-third column value">
+          <h2 class="value-multiplier"><img src="images/barack.png" /></h2>
+          <h2 class="value-multiplier">Barack Obama</h2>
+          <h5 class="value-heading">Washington D.C. Resident</h5>
+          <p class="value-description">I'm trying to figure out which is a more monumental
+           event... George's birthday party or that time I was elected president.  Right now it's a toss-up.</p>
+        </div>
+        <div class="one-third column value">
+          <h2 class="value-multiplier"><img src="images/kim.png" /></h2>
+          <h2 class="value-multiplier">Kim Kardashian</h2>
+          <h5 class="value-heading">North West's Mom</h5>
+          <p class="value-description">I'm so honored to be a part of this historic and fashionable soiree.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section categories">
+    <div class="container">
+      <h3 class="section-heading">Bucket List</h3>
+      <p class="section-description">I only have two items left on my bucket list, help me cross off one of them!</p>
+      <div class="row">
+        <ul>
+          <li>Throw Epic Party</li>
+          <li>Heli-ski in British Columbia</li>
+          <li><s>Completely fail at marriage</s></li>
+          <li><s>Binge watch Breaking Bad in an insanely short amount of time</s></li>
+          <li><s>Take a computer class</s></li>
+          <li><s>Learn what the different numbers of bells mean at Trader Joe's</s></li>
+          <li><s>Get more than 10 followers on instagram</s></li>
+          <li><s>Reorganize junk drawer</s></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section response">
+    <div class="container" id="rsvp">
+      <h3 class="section-heading">RSVP</h3>
+      <p class="section-description">
+        In order to gauge just how incredibly amazing this shindig is going
+        to be, I'm trying to get a semi-accurate guest list.  If you are
+        planning on coming, be sure to send me your email so you can get specific
+        details on the locations and times.  This is the only reason I will use 
+        the email address.  And if you aren't planning on coming
+        you can still participate in the extravaganza by sending me a message.  
+        That way, when future generations talk about the most epic party of all time,
+        you can say: "I totally was totally involved!"
+      </p>
+      <form action="" id="rsvp_form">
+        <div class="row">
+          <div class="four columns">
+            <label for="name">Your name</label>
+            <input class="u-full-width" type="text" placeholder="Jane Doe" id="name" name="name" required>
+          </div>
+          <div class="four columns">
+            <label for="email">Your email</label>
+            <input class="u-full-width" type="email" placeholder="test@mailbox.com" id="email" name="email">
+          </div>
+          <div class="four columns">
+            <label for="num_attending">Total attending</label>
+            <select class="u-full-width" id="num_attending" name="num_attending">
+              <option value="0">Sadly, I won't be coming</option>
+              <option value="1" selected="selected">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+        </div>
+        <label for="message">Message</label>
+        <textarea class="u-full-width" placeholder="Dude, Bro, OMG, this is gonna be so rad..." id="message" name="message"></textarea>
+        <input class="button-primary" type="submit" value="Submit">
+      </form>
+    </div>
+  </div>
+
+
+
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
